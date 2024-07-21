@@ -11,6 +11,8 @@ This guide details the steps to locally deploy the Wisecow application on Kubern
 3. **kubectl**: Install `kubectl` for Kubernetes management.
 4. **Git**: Install Git for cloning repositories.
 
+## ![Snap of appplication on tls](./tls.png)
+
 ## Setup Instructions
 
 1. Clone the Repository
