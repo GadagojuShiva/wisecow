@@ -23,9 +23,8 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
       run: |
-        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-west-2.amazonaws.com
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin public.ecr.aws/m4k9z0k1/wisecow
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
@@ -33,7 +32,7 @@ jobs:
         context: .
         file: Dockerfile
         push: true
-        tags: public.ecr.aws/m4k9z0k1/wisecow/wisecow:latest
+        tags: public.ecr.aws/m4k9z0k1/wisecow:latest
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -43,7 +42,7 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Setup kubectl
-      uses: actions-hub/kubectl@v1
+      uses: azure/setup-kubectl@v3
       with:
         version: 'latest'
 
