@@ -61,11 +61,13 @@ Deploy the application to Minikube:
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 kubectl apply -f ingress.yaml
-````
+```
 6. Update Hosts File
 Update your /etc/hosts file to map Minikube's IP address to the domain:
 
 Get the Minikube IP:
+
+
 ```bash
 minikube ip
 
@@ -74,8 +76,8 @@ sudo nano /etc/hosts
 
 # Add the following line:
 <Minikube-IP> wisecow.local
-
 ```
+
 7. Access the Application
 Open a browser and visit https://wisecow.local. You should see the Wisecow application running with TLS.
 
