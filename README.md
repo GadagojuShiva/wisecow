@@ -1,4 +1,116 @@
-# Wisecow Application Deployment
+# Wisecow Application Local Deployment on Kubernetes with Minikube
+
+## Overview
+
+This guide details the steps to locally deploy the Wisecow application on Kubernetes using Minikube. It covers setting up the environment, building and running Docker containers, configuring TLS, and ensuring everything works correctly with Minikube.
+
+## Prerequisites
+
+1. **Minikube**: Ensure Minikube is installed and running.
+2. **Docker**: Install Docker on your local machine.
+3. **kubectl**: Install `kubectl` for Kubernetes management.
+4. **Git**: Install Git for cloning repositories.
+
+## Setup Instructions
+
+### 1. Clone the Repository
+
+Start by cloning the Wisecow repository:
+
+```bash
+git clone https://github.com/gadagojushiva/wisecow
+cd wisecow
+````
+2. Update Kubernetes Service Configuration
+Modify the service.yaml file to change the service type from LoadBalancer to NodePort
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: wisecow-service
+spec:
+  selector:
+    app: wisecow
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4499
+  type: NodePort
+```
+3. Build and Run Docker Container
+Build the Docker image and run it locally:
+
+```bash
+docker build -t wisecow .
+docker run -d -p 4499:4499 wisecow
+```
+You can now access the application at http://localhost:4499.
+4. Configure TLS
+Create a TLS certificate and apply it to the Kubernetes cluster:
+```bash
+mkdir certs
+cd certs
+"C:\Program Files\Git\usr\bin\openssl.exe" req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=wisecow.local/O=wisecow"
+kubectl create secret tls wisecow-tls --key tls.key --cert tls.crt
+```
+5. Apply Kubernetes Manifests
+Deploy the application to Minikube:
+
+```bash
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl apply -f ingress.yaml
+````
+6. Update Hosts File
+Update your /etc/hosts file to map Minikube's IP address to the domain:
+
+Get the Minikube IP:
+```bash
+minikube ip
+
+# Update /etc/hosts:
+sudo nano /etc/hosts
+
+# Add the following line:
+<Minikube-IP> wisecow.local
+
+```
+7. Access the Application
+Open a browser and visit https://wisecow.local. You should see the Wisecow application running with TLS.
+
+8. Troubleshooting
+Address Docker CLI Context Warning
+Check Docker CLI Context:
+```bash
+docker context ls
+```
+9. Set Docker Context to Minikube:
+```bash
+docker context use minikube
+```
+If Minikube is not listed, you might need to create or update the context.
+9. Update Docker Environment:
+```bash
+eval $(minikube docker-env)
+```
+10. Verify Docker Context:
+```bash
+docker context ls
+```
+11. Ensure minikube is listed with the correct Docker endpoint.
+Restart Minikube:
+```bash
+minikube stop
+minikube start
+eval $(minikube docker-env)
+```
+12. Check Docker Commands:
+```bash
+docker info
+minikube ssh -- docker info
+```
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Wisecow Application Deployment On EKS
 
 ## Overview
 
