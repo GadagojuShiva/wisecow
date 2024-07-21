@@ -4,14 +4,14 @@
 
 This guide details the steps to locally deploy the Wisecow application on Kubernetes using Minikube. It covers setting up the environment, building and running Docker containers, configuring TLS, and ensuring everything works correctly with Minikube.
 
+## ![Snap of appplication on tls](./tls.png)
+
 ## Prerequisites
 
 1. **Minikube**: Ensure Minikube is installed and running.
 2. **Docker**: Install Docker on your local machine.
 3. **kubectl**: Install `kubectl` for Kubernetes management.
 4. **Git**: Install Git for cloning repositories.
-
-## ![Snap of appplication on tls](./tls.png)
 
 ## Setup Instructions
 
