@@ -13,7 +13,7 @@ This guide details the steps to locally deploy the Wisecow application on Kubern
 
 ## Setup Instructions
 
-### 1. Clone the Repository
+1. Clone the Repository
 
 Start by cloning the Wisecow repository:
 
