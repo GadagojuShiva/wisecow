@@ -45,6 +45,7 @@ docker build -t wisecow .
 docker run -d -p 4499:4499 wisecow
 ```
 You can now access the application at http://localhost:4499.
+
 4. Configure TLS
 Create a TLS certificate and apply it to the Kubernetes cluster:
 ```bash
