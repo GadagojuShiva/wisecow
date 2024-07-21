@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'wisecow.sh'  # Add any other files or directories you want to watch for changes
 
 jobs:
   deploy:
