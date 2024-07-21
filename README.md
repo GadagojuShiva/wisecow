@@ -20,8 +20,8 @@ Start by cloning the Wisecow repository:
 ```bash
 git clone https://github.com/gadagojushiva/wisecow
 cd wisecow
-````
-2. Update Kubernetes Service Configuration
+```
+2. Update Kubernetes Service Configuration.
 Modify the service.yaml file to change the service type from LoadBalancer to NodePort
 ```yaml
 apiVersion: v1
@@ -37,7 +37,7 @@ spec:
       targetPort: 4499
   type: NodePort
 ```
-3. Build and Run Docker Container
+3. Build and Run Docker Container.
 Build the Docker image and run it locally:
 
 ```bash
@@ -46,7 +46,7 @@ docker run -d -p 4499:4499 wisecow
 ```
 You can now access the application at http://localhost:4499.
 
-4. Configure TLS
+4. Configure TLS.
 Create a TLS certificate and apply it to the Kubernetes cluster:
 ```bash
 mkdir certs
@@ -54,7 +54,7 @@ cd certs
 "C:\Program Files\Git\usr\bin\openssl.exe" req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=wisecow.local/O=wisecow"
 kubectl create secret tls wisecow-tls --key tls.key --cert tls.crt
 ```
-5. Apply Kubernetes Manifests
+5. Apply Kubernetes Manifests.
 Deploy the application to Minikube:
 
 ```bash
@@ -62,7 +62,7 @@ kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 kubectl apply -f ingress.yaml
 ```
-6. Update Hosts File
+6. Update Hosts File.
 Update your /etc/hosts file to map Minikube's IP address to the domain:
 
 Get the Minikube IP:
@@ -78,40 +78,9 @@ sudo nano /etc/hosts
 <Minikube-IP> wisecow.local
 ```
 
-7. Access the Application
+7. Access the Application.
 Open a browser and visit https://wisecow.local. You should see the Wisecow application running with TLS.
 
-8. Troubleshooting
-Address Docker CLI Context Warning
-Check Docker CLI Context:
-```bash
-docker context ls
-```
-9. Set Docker Context to Minikube:
-```bash
-docker context use minikube
-```
-If Minikube is not listed, you might need to create or update the context.
-9. Update Docker Environment:
-```bash
-eval $(minikube docker-env)
-```
-10. Verify Docker Context:
-```bash
-docker context ls
-```
-11. Ensure minikube is listed with the correct Docker endpoint.
-Restart Minikube:
-```bash
-minikube stop
-minikube start
-eval $(minikube docker-env)
-```
-12. Check Docker Commands:
-```bash
-docker info
-minikube ssh -- docker info
-```
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Wisecow Application Deployment On EKS
 
